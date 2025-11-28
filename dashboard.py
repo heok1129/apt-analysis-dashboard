@@ -344,7 +344,7 @@ plt.close()
 # --------------------------
 # 한글 폰트 설정
 # --------------------------
-plt.rc('font', family='Malgun Gothic')  # Windows 기준
+plt.rc('font', family='NanumGothic')  # Windows 기준
 plt.rc('axes', unicode_minus=False)     # 마이너스 깨짐 방지
 
 # --------------------------
@@ -570,3 +570,4 @@ with col7:
     # col6 막대그래프 높이에 맞춤
 
     st.plotly_chart(fig, use_container_width=True, height=450)
+
