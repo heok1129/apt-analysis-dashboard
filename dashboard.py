@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import plotly.express as px
 
+
 st.set_page_config(page_title="부동산 대시보드", layout="wide", initial_sidebar_state="expanded")
 
 # --------------------------
@@ -33,8 +34,7 @@ def load_data():
 # --------------------------
 # 2) 사이드바: 주택 필터
 # --------------------------
-st.sidebar.header("🏠 주택 필터")
-st.sidebar.header("🏠 주택 필터")
+st.sidebar.header("🏠 주거 조건")
 
 # 가격 (만원)
 price_min_default = 50000   # 시작 시 최소값 예시
@@ -104,7 +104,7 @@ basic_filtered = raw_full[
 # --------------------------
 # 4) 인프라 필터
 # --------------------------
-st.sidebar.header("🏢 인프라 필터")
+st.sidebar.header("🏢 필요 인프라")
 infra_info = {
     "문화시설": art, "학교": school, "지하철": subway,
     "공원": park, "버스정류장": bus_stop, "병원": hospital, "대형마트": big_market
@@ -165,7 +165,7 @@ col2, col3 = st.columns([1,1])  # col3부터 기존 col3,col4 역할
 
 # --- 테이블1 ---
 with col1:
-    st.subheader(f"주택 필터 적용 ({len(basic_filtered)}건)")
+    st.subheader(f"주거 조건 필터 적용 ({len(basic_filtered)}건)")
     if len(basic_filtered) > 0:
         st.dataframe(basic_filtered[selected_columns])
     else:
@@ -173,7 +173,7 @@ with col1:
 
 # --- 테이블2 ---
 with col2:
-    st.subheader(f"인프라 필터 적용 ({len(infra_filtered)}건)")
+    st.subheader(f"주거 조건 + 필요 인프라 필터 적용 ({len(infra_filtered)}건)")
     if len(infra_filtered) > 0:
         st.dataframe(infra_filtered[selected_columns])
     else:
@@ -181,7 +181,7 @@ with col2:
 
 # --- 지도2 ---
 with col3:
-    st.subheader("주택 및 인프라 필터 기준 매물")
+    st.subheader("주거 조건 + 필요 인프라 기준 매물")
     if len(infra_filtered) > 0:
         map_df2 = raw_unique[raw_unique["주소"].isin(infra_filtered["주소"])].copy()
         # 지도 중심 항상 서울
@@ -207,13 +207,13 @@ if len(infra_filtered) > 0:
     st.subheader("🏆 Best Top5")
     st.dataframe(final_result[selected_columns])
 else:
-    st.info("Top5 매물 데이터가 없습니다.")
+    st.info("Top7 매물 데이터가 없습니다.")
 
 # --------------------------
 # 한글 폰트 설정
 # --------------------------
 plt.rc('font', family='Malgun Gothic')  # Windows 기준
-plt.rc('axes', unicode_minus=False)     # 마이너스 깨짐 방지
+plt.rc('axes', unicode_minus=False)
 
 # --------------------------
 # final_result 기준 자치구만 선택
@@ -228,7 +228,7 @@ import pandas as pd
 
 
 # 한글 폰트 설정
-plt.rc('font', family='NanumGothic')
+plt.rc('font', family='Malgun Gothic')  # Windows 기준
 plt.rc('axes', unicode_minus=False)
 
 # --------------------------
@@ -257,7 +257,7 @@ people_long = pd.melt(
 # 4) 바그래프 그리기
 # --------------------------
 
-st.subheader("자치구별 연령대별 인구수")
+st.subheader("Top5 자치구의 연령대별 인구수")
 
 plt.figure(figsize=(16,6))
 ax = sns.barplot(
@@ -279,7 +279,6 @@ for p in ax.patches:
 
 plt.xlabel('자치구')
 plt.ylabel('인구수')
-plt.title('자치구별 연령대별 인구수', fontsize=16)
 plt.xticks(rotation=0)
 plt.grid(axis='y', linestyle='--', alpha=0.5)
 plt.tight_layout()
@@ -310,7 +309,7 @@ household_long = pd.melt(
 # --------------------------
 # 4) 바 그래프 그리기
 # --------------------------
-st.subheader("자치구별 가구 유형별 가구수")
+st.subheader("Top5 자치구의 가구 유형별 가구수")
 
 plt.figure(figsize=(16,6))
 ax = sns.barplot(
@@ -332,7 +331,6 @@ for p in ax.patches:
 
 plt.xlabel('자치구')
 plt.ylabel('가구수')
-plt.title('필터된 매물 자치구별 가구 유형별 가구수', fontsize=16)
 plt.xticks(rotation=0)
 plt.grid(axis='y', linestyle='--', alpha=0.5)
 plt.tight_layout()
@@ -345,7 +343,7 @@ plt.close()
 # 한글 폰트 설정
 # --------------------------
 plt.rc('font', family='NanumGothic')  # Windows 기준
-plt.rc('axes', unicode_minus=False)     # 마이너스 깨짐 방지
+plt.rc('axes', unicode_minus=False)
 
 # --------------------------
 # final_result 기준 자치구만 선택
@@ -381,7 +379,7 @@ for p in ax.patches:
     )
 
 # 제목, 축 레이블, 글자 크기 설정
-plt.title("필터된 매물 자치구별 연평균 범죄 건수 (2020~2024)", fontsize=25)
+plt.title("연평균 범죄 건수 (2020~2024)", fontsize=25)
 plt.xlabel("자치구", fontsize=0)
 plt.ylabel("범죄건수", fontsize=20)
 plt.xticks(fontsize=18, rotation=0)  # 기울임 없음
@@ -394,7 +392,7 @@ plt.tight_layout()
 # --------------------------
 col4, col5 = st.columns([1, 1])
 with col4:
-    st.subheader("자치구별 연평균 범죄 건수")
+    st.subheader("Top5 자치구의 연평균 범죄 건수")
     st.pyplot(plt)
     plt.close()
 
@@ -454,7 +452,6 @@ for line in ax.get_lines():
         ax.text(x, y + max(avg_result["평단가평균"])*0.005, f"{y:,.0f}", 
                 ha='center', va='bottom', fontsize=15)
 
-plt.title("자치구별 5개년 평균 평단가 변화", fontsize=20)
 plt.xlabel("계약 연도", fontsize=17)
 plt.ylabel("평단가 평균(만원)", fontsize=17)
 plt.grid(axis='y', linestyle='--', alpha=0.7)
@@ -464,7 +461,7 @@ plt.tight_layout()
 # 6) Streamlit 출력
 # --------------------------
 with col5:
-    st.subheader("자치구별 5개년 평균 평단가")
+    st.subheader("Top5 자치구의 평균 평단가")
     st.pyplot(plt)
     plt.close()
 
@@ -520,7 +517,7 @@ col6, col7 = st.columns([3, 2])  # col5 60%, col6 40%
 # 5) 바 차트 (col5)
 # --------------------------
 with col6:
-    st.subheader("자치구별 2018~2024 CAGR(연평균 복합 성장률)")
+    st.subheader("전체 자치구별 평단가 CAGR")
 
     plt.figure(figsize=(14, 8))
     ax = sns.barplot(
@@ -539,7 +536,7 @@ with col6:
             fontsize=12
         )
 
-    plt.title("서울시 자치구별 평단가 CAGR (2018~2024)", fontsize=20)
+    plt.title("자치구별 평단가 CAGR (2018~2024)", fontsize=20)
     plt.xlabel("자치구")
     plt.ylabel("CAGR (%)")
     plt.xticks(rotation=45)
@@ -551,7 +548,7 @@ with col6:
 
 
 with col7:
-    st.subheader("자치구별 평단가 CAGR 트리맵")
+    st.subheader("전체 자치구별 평단가 CAGR 트리맵")
 
     fig = px.treemap(
         cagr_df,
@@ -568,8 +565,4 @@ with col7:
     )
 
     # col6 막대그래프 높이에 맞춤
-
     st.plotly_chart(fig, use_container_width=True, height=450)
-
-
-
