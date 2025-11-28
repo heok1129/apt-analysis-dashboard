@@ -228,7 +228,7 @@ import pandas as pd
 
 
 # 한글 폰트 설정
-plt.rc('font', family='Malgun Gothic')
+plt.rc('font', family='NanumGothic')
 plt.rc('axes', unicode_minus=False)
 
 # --------------------------
@@ -570,4 +570,5 @@ with col7:
     # col6 막대그래프 높이에 맞춤
 
     st.plotly_chart(fig, use_container_width=True, height=450)
+
 
