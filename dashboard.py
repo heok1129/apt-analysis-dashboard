@@ -207,7 +207,7 @@ if len(infra_filtered) > 0:
     st.subheader("🏆 Best Top5")
     st.dataframe(final_result[selected_columns])
 else:
-    st.info("Top7 매물 데이터가 없습니다.")
+    st.info("Top5 매물 데이터가 없습니다.")
 
 # --------------------------
 # 한글 폰트 설정
@@ -566,4 +566,5 @@ with col7:
 
     # col6 막대그래프 높이에 맞춤
     st.plotly_chart(fig, use_container_width=True, height=450)
+
 
