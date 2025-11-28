@@ -21,7 +21,7 @@ def load_data():
     park = pd.read_csv("park_data.csv", encoding='utf-8')
     bus_stop = pd.read_csv("bus_stop_data.csv", encoding='utf-8')
     hospital = pd.read_csv("hospital_data.csv", encoding='euc-kr')
-    big_market = pd.read_csv("big_market.csv", encoding='euc-kr')
+    big_market = pd.read_csv("big_market.csv", encoding='utf-8')
     people = pd.read_csv("people.csv", encoding="utf-8")
     household = pd.read_csv("house_hold.csv", encoding="utf-8")
     crime = pd.read_csv("final_crime.csv").drop(columns=["Unnamed: 0"], errors='ignore')
@@ -568,4 +568,5 @@ with col7:
     )
 
     # col6 막대그래프 높이에 맞춤
+
     st.plotly_chart(fig, use_container_width=True, height=450)
