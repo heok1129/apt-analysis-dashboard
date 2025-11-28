@@ -196,18 +196,18 @@ with col3:
         st.info("인프라 필터 조건에 맞는 지도 데이터가 없습니다.")
 
 # --------------------------
-# 7) infra_filtered 기준 Top7
+# 7) infra_filtered 기준 Top5
 # --------------------------
 if len(infra_filtered) > 0:
     final_result = infra_filtered.copy()
     final_result = final_result.sort_values(
         by=["계약 연도","평단가(만원)","평수(평)"],
         ascending=[False,True,False]
-    ).drop_duplicates(subset="주소").head(7)
-    st.subheader("Top7 매물 (평단가 낮고 평수 큰 매물)")
-    st.dataframe(final_result)
+    ).drop_duplicates(subset="주소").head(5)
+    st.subheader("🏆 Best Top5")
+    st.dataframe(final_result[selected_columns])
 else:
-    st.info("Top7 매물 데이터가 없습니다.")
+    st.info("Top5 매물 데이터가 없습니다.")
 
 # --------------------------
 # 한글 폰트 설정
@@ -570,5 +570,6 @@ with col7:
     # col6 막대그래프 높이에 맞춤
 
     st.plotly_chart(fig, use_container_width=True, height=450)
+
 
 
